@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { title, description, date, tags } = post.data;
+---
+
+<div class="post-card">
+  <h2><a href={`/posts/${post.slug}/`}>{title}</a></h2>
+  <div class="post-date">{date.toLocaleDateString('zh-CN')}</div>
+  <p class="post-desc">{description}</p>
+  <TagList tags={tags} />
+</div>
