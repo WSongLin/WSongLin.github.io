@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import TagList from '../../components/TagList.astro';
 import Giscus from '../../components/Giscus.astro';
@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts
     .filter((p) => !p.data.draft)
-    .map((p) => ({ params: { slug: p.slug } }));
+    .map((p) => ({ params: { slug: p.id } }));
 }
 
 const { slug } = Astro.params;
@@ -18,7 +18,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 const { title, description, date, tags } = post.data;
 ---
 
