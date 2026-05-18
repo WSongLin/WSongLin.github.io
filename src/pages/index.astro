@@ -1,7 +1,22 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const allPosts = await getCollection('posts');
+const posts = allPosts
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout title="文章">
-  <p>博客搭建中，敬请期待。</p>
+  {
+    posts.length === 0 ? (
+      <p>还没有文章，敬请期待。</p>
+    ) : (
+      <div class="post-list">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    )
+  }
 </Layout>
