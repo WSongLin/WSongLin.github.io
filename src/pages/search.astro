@@ -1,0 +1,18 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout title="搜索">
+  <div id="search"></div>
+</Layout>
+
+<script>
+  new PagefindUI({
+    element: "#search",
+    showImages: false,
+    translations: {
+      placeholder: "搜索文章...",
+      zero_results: "没有找到相关文章。",
+    },
+  });
+</script>
